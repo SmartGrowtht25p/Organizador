@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Planificación</title>
+<meta name="theme-color" content="#2e7d4f">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-192.png">
+<style>
+:root{--bg:#f4f6f4;--pn:#fff;--bd:#d8ddd8;--tx:#1d2a21;--mut:#6b776e;--ac:#2e7d4f;--soft:#eef2ee;
+ --ok:#d6ecdc;--okb:#6fa584;--coo:#fff4d6;--coob:#d1a93a;--cur:#dbe9fb;--curb:#5b8bd0;--fin:#e4e4e4;--finb:#9a9a9a}
+@media (prefers-color-scheme:dark){:root{color-scheme:dark;--bg:#14181a;--pn:#1e2427;--bd:#35403f;--tx:#e6ece8;--mut:#9aa8a0;--ac:#4caf78;--soft:#232b2e;
+ --ok:#214a33;--okb:#3f8f62;--coo:#4a3d17;--coob:#b58f22;--cur:#1f3a5e;--curb:#4a7fc4;--fin:#2e3235;--finb:#5a6266}}
+*{box-sizing:border-box}
+body{margin:0;font:14px system-ui,-apple-system,Segoe UI,sans-serif;background:var(--bg);color:var(--tx)}
+[hidden]{display:none!important}
+header{position:sticky;top:0;z-index:7;background:var(--pn);border-bottom:1px solid var(--bd);padding:8px 10px;display:flex;align-items:center;gap:8px}
+header h1{font-size:16px;margin:0;flex:1;white-space:nowrap}
+#upd{font-size:11px;color:var(--mut);text-align:right}
+button,select,input{font:inherit;color:var(--tx)}
+#rf{border:1px solid var(--bd);background:var(--pn);border-radius:8px;padding:5px 10px}
+#login{max-width:340px;margin:18vh auto 0;padding:0 18px;text-align:center}
+#login h2{font-size:18px;margin:0 0 8px}
+#login input{width:100%;padding:12px;border:1px solid var(--bd);border-radius:10px;background:var(--pn);margin:10px 0}
+#login button{width:100%;padding:12px;border:0;border-radius:10px;background:var(--ac);color:#fff;font-weight:600}
+#err{color:#d33;min-height:1.3em;font-size:14px}
+#ctl{display:flex;gap:6px;padding:8px 10px 4px;align-items:center}
+#ctl button,#ctl select{border:1px solid var(--bd);background:var(--pn);border-radius:8px;padding:6px 11px}
+#ctl .sp{flex:1}
+#fil{padding:2px 10px 8px}
+#fil select{width:100%;padding:8px;border:1px solid var(--bd);border-radius:8px;background:var(--pn)}
+#wrap{padding:0 4px}
+#wrap.scroll{overflow-x:auto}
+#grid{display:grid;grid-template-columns:26px repeat(var(--n),minmax(112px,1fr));gap:0;background:var(--bd);border:1px solid var(--bd);border-radius:10px}
+#grid>div{background:var(--pn)}
+.dh{padding:6px 4px;text-align:center;background:var(--soft)!important;line-height:1.1;position:sticky;top:45px;z-index:3}
+#wrap.scroll .dh{position:static}
+.dh span{display:block;font-size:10px;text-transform:uppercase;color:var(--mut)}
+.dh b{font-size:19px}
+.dh i{display:block;font-style:normal;font-size:10px;color:var(--mut)}
+.dh.hoy{background:var(--ac)!important;color:#fff}.dh.hoy span,.dh.hoy i{color:#e8f5ec}
+.gf{background:var(--soft)!important;display:flex;align-items:center;justify-content:center;min-height:70px}
+.gf span{writing-mode:vertical-rl;transform:rotate(180deg);font-size:10px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--mut);white-space:nowrap}
+.cell{padding:3px;min-height:70px}
+.card{border:1px solid var(--okb);background:var(--ok);border-radius:8px;padding:4px 5px;margin-bottom:4px;overflow-wrap:anywhere}
+.card.coo{background:var(--coo);border-color:var(--coob)}
+.card.cur{background:var(--cur);border-color:var(--curb)}
+.card.fin{background:var(--fin);border-color:var(--finb);color:var(--mut)}
+.card.fin .ti{text-decoration:line-through}
+.tm{font-size:10px;font-weight:600;color:var(--mut)}
+.ti{font-weight:700;font-size:12px;line-height:1.2;margin-top:1px}
+.su{font-size:10.5px;color:var(--mut);line-height:1.25;margin-top:1px}
+.ch{display:flex;flex-wrap:wrap;gap:3px;margin-top:4px}
+.chip{border:1px solid var(--tc);background:var(--tb);color:var(--tx);border-radius:9px;padding:0 5px;font-size:10px;line-height:1.5}
+.t-piloto{--tc:#1e6fd9;--tb:#dce9fb}.t-asistente{--tc:#e07b00;--tb:#fde8cc}.t-drone{--tc:#7b3fc4;--tb:#eadcf8}.t-camioneta{--tc:#c2185b;--tb:#fadbe8}.t-carro{--tc:#8a6a3a;--tb:#efe3d0}
+@media (prefers-color-scheme:dark){.t-piloto{--tc:#5aa0ff;--tb:#1c3350}.t-asistente{--tc:#ffa033;--tb:#4a3015}.t-drone{--tc:#b88aef;--tb:#33234d}.t-camioneta{--tc:#f06494;--tb:#4a1d30}.t-carro{--tc:#c9a266;--tb:#3d3220}}
+.nada{color:var(--mut);padding:14px;text-align:center}
+#leg a{color:var(--ac)}
+#leg{font-size:11px;color:var(--mut);padding:8px 12px 24px;line-height:1.5}
+</style>
+</head>
+<body>
+<header><h1>🛩️ Planificación</h1><span id="upd"></span><button id="rf" title="Actualizar">↻</button></header>
+
+<form id="login" hidden>
+  <h2>Ingresá la clave</h2>
+  <input id="u" placeholder="Link que te pasaron (https://…)" autocomplete="off" hidden>
+  <input id="k" type="password" placeholder="Clave de visor" autocomplete="current-password">
+  <div id="err"></div>
+  <button type="submit">Entrar</button>
+</form>
+
+<div id="app" hidden>
+  <div id="ctl"><button id="prev">‹</button><button id="hoy">Hoy</button><button id="next">›</button><span class="sp"></span>
+    <select id="span"><option value="1">1 día</option><option value="3">3 días</option><option value="5">5 días</option><option value="7">7 días</option></select></div>
+  <div id="fil"><select id="selRes"></select></div>
+  <div id="wrap"><div id="grid"></div></div>
+  <div id="leg">Verde: confirmado · Amarillo: coordinar · Azul: en curso · Gris tachado: finalizado · ↻ continuación.<br>Cada trabajo aparece en la franja donde empieza; el horario figura en la tarjeta.<br><a href="#" id="cambiar">Cambiar clave o link</a></div>
+</div>
+
+<script>
+const U=16,FR=['Madrugada','Mañana','Tarde','Noche'];
+const TIPOS={piloto:'Pilotos',asistente:'Asistentes',drone:'Drones',camioneta:'Camionetas',carro:'Carros'};
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const norm=s=>String(s||'').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase();
+const today=()=>{const d=new Date();return Math.floor(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate())/864e5)};
+const fmt=(n,o)=>new Date(n*864e5).toLocaleDateString('es-AR',Object.assign({timeZone:'UTC'},o));
+const hm=m=>String(Math.floor(m/60)).padStart(2,'0')+':'+String(m%60).padStart(2,'0');
+const LS=(k,v)=>{try{if(v===undefined)return localStorage.getItem(k);v===null?localStorage.removeItem(k):localStorage.setItem(k,v)}catch(e){return null}};
+let D=null,key='',filtro='',span=+LS('sg_visor_span')||3,from=today();
+
+const GAS=!!(window.google&&google.script&&google.script.run);   // dentro del script de Google usa google.script.run; hospedado usa fetch
+let base=LS('sg_visor_url')||'',off=false;
+const urlDe=s=>{s=String(s||'').trim();if(!s)return'';return /^https?:/.test(s)?s:'https://script.google.com/macros/s/'+s+'/exec'};
+try{const q=new URLSearchParams(location.search).get('s');if(q){base=urlDe(q);LS('sg_visor_url',base);history.replaceState(null,'',location.pathname)}}catch(e){}
+function login(msg){$('#app').hidden=true;$('#login').hidden=false;$('#u').hidden=GAS||!!base;$('#err').textContent=msg||'';($('#u').hidden?$('#k'):$('#u')).focus()}
+function pedir(){return GAS?new Promise((ok,ko)=>google.script.run.withSuccessHandler(ok).withFailureHandler(ko).getDatos(key))
+  :fetch(base+(base.includes('?')?'&':'?')+'datos=1&k='+encodeURIComponent(key)).then(r=>{if(!r.ok)throw new Error('http '+r.status);return r.json()})}
+function cargar(){
+  if((!GAS&&!base)||!key)return login();
+  pedir().then(r=>{
+      if(r&&r.error==='clave'){LS('sg_visor_key',null);key='';return login('Clave incorrecta')}
+      D=r;off=false;if(r&&!r.vacio)LS('sg_visor_cache',JSON.stringify(r));pintar()})
+    .catch(()=>{off=true;if(!D){try{D=JSON.parse(LS('sg_visor_cache')||'null')}catch(e){}}
+      if(D)pintar();
+      else{$('#login').hidden=true;$('#app').hidden=false;$('#fil').hidden=true;$('#grid').style.display='block';$('#upd').innerHTML='Sin conexión';
+        $('#grid').innerHTML='<div class="nada">No se pudo conectar. Revisá la conexión o tocá «Cambiar clave o link» más abajo.</div>'}})}
+$('#login').addEventListener('submit',e=>{e.preventDefault();
+  if(!GAS&&!base){const u=urlDe($('#u').value);if(!u)return;base=u;LS('sg_visor_url',base)}
+  key=$('#k').value.trim();if(!key)return;LS('sg_visor_key',key);$('#k').value='';cargar()});
+$('#rf').onclick=cargar;
+$('#cambiar').onclick=e=>{e.preventDefault();LS('sg_visor_key',null);key='';if(!GAS){LS('sg_visor_url',null);base=''}login()};
+
+function pintar(){
+  $('#login').hidden=true;$('#app').hidden=false;$('#span').value=span;
+  if(!D||D.vacio||!D.jobs){$('#fil').hidden=true;$('#grid').style.display='block';$('#grid').innerHTML='<div class="nada">Todavía no se publicó ninguna planificación.</div>';return}
+  $('#grid').style.display='';
+  $('#upd').innerHTML=(off?'Sin conexión · último dato<br>':'Actualizado<br>')+new Date(D.at).toLocaleString('es-AR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'});
+  const rs={};D.jobs.forEach(j=>(j.res||[]).forEach(r=>{(rs[r.t]=rs[r.t]||new Set()).add(r.n)}));
+  $('#fil').hidden=false;
+  $('#selRes').innerHTML='<option value="">Ver todo</option>'+Object.keys(TIPOS).filter(t=>rs[t]).map(t=>`<optgroup label="${TIPOS[t]}">${[...rs[t]].sort().map(n=>`<option value="${esc(t+':'+n)}" ${filtro===t+':'+n?'selected':''}>${esc(n)}</option>`).join('')}</optgroup>`).join('');
+  const jobs=D.jobs.filter(j=>!filtro||(j.res||[]).some(r=>r.t+':'+r.n===filtro));
+  const t=today(),days=[...Array(span)].map((_,i)=>from+i);
+  $('#wrap').classList.toggle('scroll',span>3);
+  const g=$('#grid');g.style.setProperty('--n',span);
+  let h='<div class="gf" style="min-height:0"></div>'+days.map(d=>`<div class="dh ${d===t?'hoy':''}"><span>${d===t?'Hoy':fmt(d,{weekday:'short'})}</span><b>${fmt(d,{day:'numeric'})}</b><i>${fmt(d,{month:'short'})}</i></div>`).join('');
+  FR.forEach((f,i)=>{
+    h+=`<div class="gf"><span>${f}</span></div>`;
+    days.forEach(d=>{
+      const L=jobs.filter(j=>Math.floor(j.s/U)===d&&Math.min(3,Math.floor((j.s-d*U)/4))===i).sort((a,b)=>a.s-b.s);
+      h+=`<div class="cell">${L.map(card(d)).join('')}</div>`})});
+  g.innerHTML=h}
+const card=day=>j=>{
+  const n=norm(j.st),cls=n.startsWith('finaliz')?'fin':n==='coordinar'?'coo':/en curso/.test(n)?'cur':'ok';
+  const a=(j.s-day*U)*90,b=(j.e-day*U)*90;
+  return `<article class="card ${cls}"><div class="tm">${hm(a)}–${hm(b)}</div>
+    <div class="ti">${cls==='fin'?'✔ ':''}${j.cont?'↻ ':''}${esc(j.t)}</div>
+    <div class="su">${esc(j.f)}<br>${esc(j.h)}${j.c?' · '+esc(j.c):''}</div>
+    ${(j.res||[]).length?`<div class="ch">${j.res.map(r=>`<span class="chip t-${esc(r.t)}">${esc(r.n)}</span>`).join('')}</div>`:''}</article>`};
+$('#prev').onclick=()=>{from-=span;pintar()};
+$('#next').onclick=()=>{from+=span;pintar()};
+$('#hoy').onclick=()=>{from=today();pintar()};
+$('#span').onchange=e=>{span=+e.target.value;LS('sg_visor_span',String(span));pintar()};
+$('#selRes').addEventListener('change',e=>{filtro=e.target.value;pintar()});
+
+key=LS('sg_visor_key')||'';cargar();
+if(!GAS&&'serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
+setInterval(()=>{if(!document.hidden&&key)cargar()},60000);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&key)cargar()});
+</script>
+</body>
+</html>
